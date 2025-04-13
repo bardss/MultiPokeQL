@@ -24,7 +24,7 @@ fun HomeContent(uiState: HomeViewModel.UiState) {
         Scaffold {
             when (uiState) {
                 is HomeViewModel.UiState.Loaded -> HomeList(uiState)
-                is HomeViewModel.UiState.Loading -> { }
+                is HomeViewModel.UiState.Loading -> LoadingScreen()
             }
         }
     }

@@ -28,7 +28,7 @@ class HomeViewModel : ViewModel() {
     )
 
     val uiState: StateFlow<UiState> = flowOf(
-        UiState.Loaded(exampleData)
+        UiState.Loading
     ).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), UiState.Loading)
 
     sealed interface UiState {
