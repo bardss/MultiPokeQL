@@ -5,6 +5,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.jakubaniola.multipokeql.designsystem.AppTheme
 import com.jakubaniola.multipokeql.ui.home.HomeViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -12,7 +13,7 @@ import org.koin.compose.viewmodel.koinViewModel
 fun HomeScreen(
     viewModel: HomeViewModel = koinViewModel()
 ) {
-    MaterialTheme {
+    AppTheme {
         val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
         HomeContent(uiState)
     }
@@ -20,12 +21,10 @@ fun HomeScreen(
 
 @Composable
 fun HomeContent(uiState: HomeViewModel.UiState) {
-    MaterialTheme {
-        Scaffold {
-            when (uiState) {
-                is HomeViewModel.UiState.Loaded -> HomeList(uiState)
-                is HomeViewModel.UiState.Loading -> LoadingScreen()
-            }
+    Scaffold {
+        when (uiState) {
+            is HomeViewModel.UiState.Loaded -> HomeList(uiState)
+            is HomeViewModel.UiState.Loading -> LoadingScreen()
         }
     }
 }
