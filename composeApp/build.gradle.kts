@@ -47,7 +47,14 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.coil.compose)
-            implementation(libs.coil.network)
+            implementation(libs.coil.network.ktor)
+        }
+        androidMain.dependencies {
+            implementation(libs.ktor.client.android)
+        }
+
+        appleMain.dependencies {
+            implementation(libs.ktor.client.darwin)
         }
     }
 }

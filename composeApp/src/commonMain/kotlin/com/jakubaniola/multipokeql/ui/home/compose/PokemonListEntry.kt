@@ -29,7 +29,7 @@ fun PokemonListEntry(
     ) {
         Row(
             modifier = Modifier
-                .background(MaterialTheme.colors.secondaryVariant)
+                .background(MaterialTheme.colors.surface)
                 .padding(16.dp)
         ) {
             AsyncImage(
