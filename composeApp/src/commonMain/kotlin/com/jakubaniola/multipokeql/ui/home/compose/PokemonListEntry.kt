@@ -35,9 +35,9 @@ fun PokemonListEntry(
             AsyncImage(
                 model = imageUrl,
                 contentDescription = "$pokemonName icon",
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.FillHeight,
                 modifier = Modifier
-                    .size(64.dp)
+                    .size(height = 64.dp, width = 120.dp)
                     .padding(end = 16.dp)
                     .clip(RoundedCornerShape(8.dp))
             )
@@ -52,7 +52,7 @@ fun PokemonListEntry(
                     color = MaterialTheme.colors.onSurface
                 )
                 Text(
-                    text = "No. $pokedexNumber",
+                    text = "PokeDex. $pokedexNumber",
                     fontSize = 16.sp,
                     color = MaterialTheme.colors.onSurface.copy(alpha = 0.7f)
                 )

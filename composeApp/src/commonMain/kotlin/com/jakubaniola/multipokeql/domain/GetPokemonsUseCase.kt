@@ -8,6 +8,7 @@ class GetPokemonsUseCase(
 ) {
     suspend operator fun invoke() = pokemonRepository
         .getPokemons()
+        .distinctBy { it.pokedexNum }
         .toPokemonListItem()
 }
 

@@ -5,15 +5,20 @@ import com.jakubaniola.multipokeql.GetPokemonListQuery
 
 class PokemonRemoteServiceImpl : PokemonRemoteService {
     private val apolloClient = ApolloClient.Builder()
-        .serverUrl("https://graphqlpokemon.favware.tech/v8")
+        .serverUrl(POKEMON_GRAPHQL_URL)
         .build()
 
     override suspend fun getPokemons() = apolloClient
-        .query(GetPokemonListQuery(93, 50))
+        .query(GetPokemonListQuery(OFFSET_TO_START_FROM_POKEDEX_1, 200))
         .execute()
         .data
         ?.getAllPokemon
         ?.toRemotePokemonListItem() ?: listOf()
+
+    companion object {
+        private const val POKEMON_GRAPHQL_URL = "https://graphqlpokemon.favware.tech/v8"
+        private const val OFFSET_TO_START_FROM_POKEDEX_1 = 93
+    }
 }
 
 private fun List<GetPokemonListQuery.GetAllPokemon>.toRemotePokemonListItem() =
