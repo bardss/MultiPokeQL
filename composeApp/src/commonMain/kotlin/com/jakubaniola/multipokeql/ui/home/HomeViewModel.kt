@@ -2,16 +2,27 @@ package com.jakubaniola.multipokeql.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jakubaniola.multipokeql.ui.home.HomeViewModel.PokemonListUiModel
+import com.jakubaniola.multipokeql.domain.GetPokemonsUseCase
+import com.jakubaniola.multipokeql.domain.PokemonListItem
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 
-class HomeViewModel : ViewModel() {
-    val uiState: StateFlow<UiState> = flowOf(
-        UiState.Loaded(exampleData)
-    ).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), UiState.Loading)
+class HomeViewModel(
+    private val getPokemons: GetPokemonsUseCase,
+) : ViewModel() {
+    val uiState: StateFlow<UiState> = flow {
+        emit(UiState.Loaded(getPokemons().toUiModel()))
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), UiState.Loading)
+
+    private fun List<PokemonListItem>.toUiModel() = map { it.toUiModel() }
+
+    private fun PokemonListItem.toUiModel() = PokemonListUiModel(
+        pokedexId = pokedexNum,
+        name = name.capitalize(),
+        imageUrl = imageUrl,
+    )
 
     sealed interface UiState {
         data object Loading : UiState
@@ -24,61 +35,3 @@ class HomeViewModel : ViewModel() {
         val imageUrl: String,
     )
 }
-
-private val exampleData = listOf(
-    PokemonListUiModel(
-        pokedexId = "001",
-        name = "Bulbasaur",
-        imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
-    ),
-    PokemonListUiModel(
-        pokedexId = "002",
-        name = "Ivysaur",
-        imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png"
-    ),
-    PokemonListUiModel(
-        pokedexId = "003",
-        name = "Venusaur",
-        imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png"
-    ),
-    PokemonListUiModel(
-        pokedexId = "004",
-        name = "Charmander",
-        imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png"
-    ),
-    PokemonListUiModel(
-        pokedexId = "005",
-        name = "Charmeleon",
-        imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png"
-    ),
-    PokemonListUiModel(
-        pokedexId = "006",
-        name = "Charizard",
-        imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png"
-    ),
-    PokemonListUiModel(
-        pokedexId = "007",
-        name = "Squirtle",
-        imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"
-    ),
-    PokemonListUiModel(
-        pokedexId = "008",
-        name = "Wartortle",
-        imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png"
-    ),
-    PokemonListUiModel(
-        pokedexId = "009",
-        name = "Blastoise",
-        imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png"
-    ),
-    PokemonListUiModel(
-        pokedexId = "010",
-        name = "Caterpie",
-        imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png"
-    ),
-    PokemonListUiModel(
-        pokedexId = "011",
-        name = "Metapod",
-        imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/11.png"
-    ),
-)

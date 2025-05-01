@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.apolllo)
 }
 
 kotlin {
@@ -48,6 +49,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
+            implementation(libs.apollo.runtime)
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.android)
@@ -83,6 +85,16 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+apollo {
+    service("pokemon") {
+        packageName.set("com.jakubaniola.multipokeql")
+        introspection {
+            endpointUrl.set("https://graphqlpokemon.favware.tech/v8")
+            schemaFile.set(file("src/commonMain/graphql/schema.graphqls"))
+        }
     }
 }
 
