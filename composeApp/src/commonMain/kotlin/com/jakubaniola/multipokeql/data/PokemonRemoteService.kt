@@ -1,5 +1,8 @@
 package com.jakubaniola.multipokeql.data
 
+import com.jakubaniola.multipokeql.core.ServiceResponse
+
 interface PokemonRemoteService {
-    suspend fun getPokemons(): List<RemotePokemonListItem>
+    suspend fun getPokemons(): ServiceResponse<List<RemotePokemonListItem>>
+    suspend fun getPokemon(key: String): ServiceResponse<RemotePokemon>
 }

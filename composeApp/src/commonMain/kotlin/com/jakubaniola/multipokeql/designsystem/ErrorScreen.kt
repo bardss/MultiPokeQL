@@ -1,26 +1,26 @@
-package com.jakubaniola.multipokeql.ui.home.compose
+package com.jakubaniola.multipokeql.designsystem
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 
 @Composable
-fun LoadingScreen() {
+fun ErrorScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.background),
         contentAlignment = Alignment.Center
     ) {
-        CircularProgressIndicator(
-            color = MaterialTheme.colors.primary,
-            strokeWidth = 4.dp
+        Text(
+            text = "⚠️ Oops! Something went wrong.",
+            color = MaterialTheme.colors.error,
+            style = MaterialTheme.typography.h6
         )
     }
 }

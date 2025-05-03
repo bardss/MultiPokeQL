@@ -8,7 +8,7 @@ class GetPokemonsUseCase(
 ) {
     suspend operator fun invoke() = pokemonRepository
         .getPokemons()
-        .distinctBy { it.pokedexNum }
+        .data
         .toPokemonListItem()
 }
 
@@ -16,7 +16,7 @@ private fun List<RemotePokemonListItem>.toPokemonListItem() =
     map { it.toPokemonListItem() }
 
 private fun RemotePokemonListItem.toPokemonListItem() = PokemonListItem(
-    pokedexNum = pokedexNum,
+    pokedexNum = pokedexNumber,
     name = name,
     imageUrl = imageUrl
 )

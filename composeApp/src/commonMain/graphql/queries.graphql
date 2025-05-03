@@ -3,5 +3,25 @@ query GetPokemonList($offset: Int!, $take: Int!) {
         species
         num
         sprite
+        key
+    }
+}
+
+query GetPokemonDetails($pokemonName: PokemonEnum!) {
+    getPokemon(pokemon: $pokemonName) {
+        species
+        num
+        sprite
+        height
+        weight
+        legendary
+        types {
+            name
+        }
+        gender {
+            male
+            female
+        }
+        bulbapediaPage
     }
 }
