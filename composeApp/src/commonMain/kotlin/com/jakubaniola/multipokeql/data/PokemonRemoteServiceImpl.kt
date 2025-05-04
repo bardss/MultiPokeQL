@@ -20,9 +20,9 @@ class PokemonRemoteServiceImpl : PokemonRemoteService {
             ?.toRemotePokemonListItem() ?: listOf()
     )
 
-    override suspend fun getPokemon(key: String): ServiceResponse<RemotePokemon> {
+    override suspend fun getPokemon(pokemonKey: String): ServiceResponse<RemotePokemon> {
         val response = apolloClient
-            .query(GetPokemonDetailsQuery(PokemonEnum.safeValueOf(key)))
+            .query(GetPokemonDetailsQuery(PokemonEnum.safeValueOf(pokemonKey)))
             .execute()
             .data
             ?.getPokemon
@@ -44,7 +44,7 @@ private fun List<GetPokemonListQuery.GetAllPokemon>.toRemotePokemonListItem() =
     map { it.toRemotePokemonListItem() }
 
 private fun GetPokemonListQuery.GetAllPokemon.toRemotePokemonListItem() = RemotePokemonListItem(
-    key = key.rawValue,
+    pokemonKey = key.rawValue,
     pokedexNumber = num.toString(),
     name = species,
     imageUrl = sprite,

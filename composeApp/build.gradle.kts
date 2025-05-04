@@ -50,6 +50,7 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
             implementation(libs.apollo.runtime)
+            implementation(libs.bankhandler)
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.android)

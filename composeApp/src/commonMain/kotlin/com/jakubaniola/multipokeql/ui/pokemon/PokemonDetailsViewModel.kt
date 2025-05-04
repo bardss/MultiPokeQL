@@ -5,13 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.jakubaniola.multipokeql.core.DataResult
 import com.jakubaniola.multipokeql.domain.GetPokemonDetailsUseCase
 import com.jakubaniola.multipokeql.domain.Pokemon
-import com.jakubaniola.multipokeql.ui.home.HomeViewModel.PokemonListUiModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 
-class PokemonDetailViewModel(
+class PokemonDetailsViewModel(
     private val pokemonKey: String,
     private val getPokemonDetails: GetPokemonDetailsUseCase,
 ) : ViewModel() {

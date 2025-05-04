@@ -17,13 +17,14 @@ import coil3.compose.AsyncImage
 
 @Composable
 fun PokemonListEntry(
+    modifier: Modifier,
     pokemonName: String,
     pokedexNumber: Int,
     imageUrl: String
 ) {
     Card(
         shape = RoundedCornerShape(8.dp),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(8.dp),
     ) {

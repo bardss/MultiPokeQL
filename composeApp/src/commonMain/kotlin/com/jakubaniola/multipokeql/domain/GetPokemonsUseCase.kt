@@ -16,12 +16,14 @@ private fun List<RemotePokemonListItem>.toPokemonListItem() =
     map { it.toPokemonListItem() }
 
 private fun RemotePokemonListItem.toPokemonListItem() = PokemonListItem(
+    pokemonKey = pokemonKey,
     pokedexNum = pokedexNumber,
     name = name,
     imageUrl = imageUrl
 )
 
 data class PokemonListItem(
+    val pokemonKey: String,
     val pokedexNum: String,
     val name: String,
     val imageUrl: String,

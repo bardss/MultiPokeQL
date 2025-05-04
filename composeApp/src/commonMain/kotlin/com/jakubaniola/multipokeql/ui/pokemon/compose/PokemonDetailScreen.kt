@@ -17,7 +17,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -27,31 +29,34 @@ import coil3.compose.AsyncImage
 import com.jakubaniola.multipokeql.designsystem.AppTheme
 import com.jakubaniola.multipokeql.designsystem.ErrorScreen
 import com.jakubaniola.multipokeql.designsystem.LoadingScreen
-import com.jakubaniola.multipokeql.ui.pokemon.PokemonDetailViewModel
+import com.jakubaniola.multipokeql.ui.pokemon.PokemonDetailsViewModel
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
+
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun PokemonDetailScreen(
-    viewModel: PokemonDetailViewModel = koinViewModel()
-) {
-    AppTheme {
-        val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
-        when (uiState) {
-            is PokemonDetailViewModel.UiState.Error -> ErrorScreen()
-            is PokemonDetailViewModel.UiState.Loading -> LoadingScreen()
-            is PokemonDetailViewModel.UiState.Loaded -> PokemonDetailContent(
-                pokemonName = uiState.pokemon.pokemonName,
-                pokedexNumber = uiState.pokemon.pokedexNumber,
-                imageUrl = uiState.pokemon.imageUrl,
-                height = uiState.pokemon.height,
-                weight = uiState.pokemon.weight,
-                isLegendary = uiState.pokemon.isLegendary,
-                types = uiState.pokemon.types,
-                gender = uiState.pokemon.gender,
-                externalLink = uiState.pokemon.externalLink
-            )
-        }
-
+fun PokemonDetailsScreen(
+    pokemonKey: String,
+    viewModel: PokemonDetailsViewModel = koinViewModel(parameters = { parametersOf(pokemonKey) }),
+    navigateBack: () -> Unit,
+) = AppTheme {
+    BackHandler(onBack = navigateBack)
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+    when (uiState) {
+        is PokemonDetailsViewModel.UiState.Error -> ErrorScreen()
+        is PokemonDetailsViewModel.UiState.Loading -> LoadingScreen()
+        is PokemonDetailsViewModel.UiState.Loaded -> PokemonDetailContent(
+            pokemonName = uiState.pokemon.pokemonName,
+            pokedexNumber = uiState.pokemon.pokedexNumber,
+            imageUrl = uiState.pokemon.imageUrl,
+            height = uiState.pokemon.height,
+            weight = uiState.pokemon.weight,
+            isLegendary = uiState.pokemon.isLegendary,
+            types = uiState.pokemon.types,
+            gender = uiState.pokemon.gender,
+            externalLink = uiState.pokemon.externalLink
+        )
     }
 }
 

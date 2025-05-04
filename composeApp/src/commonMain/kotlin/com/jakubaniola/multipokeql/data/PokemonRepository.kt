@@ -4,11 +4,11 @@ import com.jakubaniola.multipokeql.core.DataResult
 
 interface PokemonRepository {
     suspend fun getPokemons(): DataResult.Success<List<RemotePokemonListItem>>
-    suspend fun getPokemon(key: String): DataResult<RemotePokemon>
+    suspend fun getPokemon(pokemonKey: String): DataResult<RemotePokemon>
 }
 
 data class RemotePokemonListItem(
-    val key: String,
+    val pokemonKey: String,
     val pokedexNumber: String,
     val name: String,
     val imageUrl: String,

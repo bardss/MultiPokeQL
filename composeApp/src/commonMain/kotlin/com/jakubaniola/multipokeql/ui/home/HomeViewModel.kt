@@ -19,6 +19,7 @@ class HomeViewModel(
     private fun List<PokemonListItem>.toUiModel() = map { it.toUiModel() }
 
     private fun PokemonListItem.toUiModel() = PokemonListUiModel(
+        pokemonKey = pokemonKey,
         pokedexId = pokedexNum,
         name = name.capitalize(),
         imageUrl = imageUrl,
@@ -30,6 +31,7 @@ class HomeViewModel(
     }
 
     data class PokemonListUiModel(
+        val pokemonKey: String,
         val pokedexId: String,
         val name: String,
         val imageUrl: String,

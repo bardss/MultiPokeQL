@@ -14,8 +14,8 @@ class PokemonRepositoryImpl(
                 .distinctBy { it.pokedexNumber }
         )
 
-    override suspend fun getPokemon(key: String) =
+    override suspend fun getPokemon(pokemonKey: String) =
         pokemonRemoteService
-            .getPokemon(key)
+            .getPokemon(pokemonKey)
             .toDataResult()
 }

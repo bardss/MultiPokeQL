@@ -8,8 +8,8 @@ import com.jakubaniola.multipokeql.data.RemotePokemonListItem
 class GetPokemonDetailsUseCase(
     private val pokemonRepository: PokemonRepository,
 ) {
-    suspend operator fun invoke(key: String) = pokemonRepository
-        .getPokemon(key)
+    suspend operator fun invoke(pokemonKey: String) = pokemonRepository
+        .getPokemon(pokemonKey)
         .mapSuccess { it.toPokemon() }
 }
 
