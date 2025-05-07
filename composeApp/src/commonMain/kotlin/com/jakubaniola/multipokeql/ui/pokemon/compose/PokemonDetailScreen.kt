@@ -33,6 +33,7 @@ import com.jakubaniola.multipokeql.designsystem.ErrorScreen
 import com.jakubaniola.multipokeql.designsystem.LoadingScreen
 import com.jakubaniola.multipokeql.ui.pokemon.PokemonDetailsViewModel
 import org.koin.compose.viewmodel.koinViewModel
+import com.jakubaniola.multipokeql.navigation.BrowserNavigator
 
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -41,6 +42,7 @@ fun PokemonDetailsScreen(
     pokemonKey: String,
     viewModel: PokemonDetailsViewModel = koinViewModel(),
     navigateBack: () -> Unit,
+    browserNavigator: BrowserNavigator,
 ) = AppTheme {
     LaunchedEffect(pokemonKey) {
         viewModel.initUiState(pokemonKey)
@@ -61,7 +63,8 @@ fun PokemonDetailsScreen(
             isLegendary = uiState.pokemon.isLegendary,
             types = uiState.pokemon.types,
             gender = uiState.pokemon.gender,
-            externalLink = uiState.pokemon.externalLink
+            externalLink = uiState.pokemon.externalLink,
+            browserNavigator = browserNavigator
         )
     }
 }
@@ -76,7 +79,8 @@ fun PokemonDetailContent(
     isLegendary: Boolean,
     types: List<PokemonDetailsViewModel.PokemonType>,
     gender: String,
-    externalLink: String
+    externalLink: String,
+    browserNavigator: BrowserNavigator,
 ) {
     Card(
         shape = RoundedCornerShape(16.dp),
@@ -200,7 +204,7 @@ fun PokemonDetailContent(
             // External Link Button
             Button(
                 onClick = {
-                    // Handle external link click
+                    browserNavigator.openBrowser(externalLink)
                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)

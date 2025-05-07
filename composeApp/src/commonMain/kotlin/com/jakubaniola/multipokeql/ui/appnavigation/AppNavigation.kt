@@ -7,6 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.jakubaniola.multipokeql.ui.home.compose.HomeScreen
 import com.jakubaniola.multipokeql.ui.pokemon.compose.PokemonDetailsScreen
+import com.jakubaniola.multipokeql.navigation.BrowserNavigator
 
 sealed interface Screen {
     data object Home : Screen
@@ -14,7 +15,7 @@ sealed interface Screen {
 }
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(browserNavigator: BrowserNavigator) {
     var currentScreen by remember { mutableStateOf<Screen>(Screen.Home) }
 
     when (val screen = currentScreen) {
@@ -25,6 +26,7 @@ fun AppNavigation() {
         is Screen.PokemonDetails -> PokemonDetailsScreen(
             pokemonKey = screen.pokemonKey,
             navigateBack = { currentScreen = Screen.Home },
+            browserNavigator = browserNavigator,
         )
     }
 }
