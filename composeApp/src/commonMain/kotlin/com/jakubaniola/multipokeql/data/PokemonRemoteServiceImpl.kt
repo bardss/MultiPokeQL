@@ -59,5 +59,5 @@ private fun GetPokemonDetailsQuery.GetPokemon.toRemotePokemon() = RemotePokemon(
     isLegendary = legendary,
     gender = gender.toString(),
     externalLink = bulbapediaPage,
-    types = types.map { it.toString() }
+    types = types.map { it.name }
 )

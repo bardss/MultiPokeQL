@@ -9,7 +9,6 @@ import com.jakubaniola.multipokeql.domain.GetPokemonsUseCase
 import com.jakubaniola.multipokeql.ui.home.HomeViewModel
 import com.jakubaniola.multipokeql.ui.pokemon.PokemonDetailsViewModel
 import org.koin.core.context.startKoin
-import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
@@ -24,9 +23,7 @@ fun initKoin() {
         }
         val viewModelModule = module {
             viewModelOf(::HomeViewModel)
-            viewModel { (pokemonKey: String) ->
-                PokemonDetailsViewModel(pokemonKey, get())
-            }
+            viewModelOf(::PokemonDetailsViewModel)
         }
         modules(viewModelModule, appModule)
     }

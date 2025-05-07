@@ -16,11 +16,13 @@ import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,19 +33,23 @@ import com.jakubaniola.multipokeql.designsystem.ErrorScreen
 import com.jakubaniola.multipokeql.designsystem.LoadingScreen
 import com.jakubaniola.multipokeql.ui.pokemon.PokemonDetailsViewModel
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.parameter.parametersOf
 
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun PokemonDetailsScreen(
     pokemonKey: String,
-    viewModel: PokemonDetailsViewModel = koinViewModel(parameters = { parametersOf(pokemonKey) }),
+    viewModel: PokemonDetailsViewModel = koinViewModel(),
     navigateBack: () -> Unit,
 ) = AppTheme {
-    BackHandler(onBack = navigateBack)
-    val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
-    when (uiState) {
+    LaunchedEffect(pokemonKey) {
+        viewModel.initUiState(pokemonKey)
+    }
+    BackHandler(onBack = {
+        viewModel.resetUiState()
+        navigateBack()
+    })
+    when (val uiState = viewModel.uiState.collectAsStateWithLifecycle().value) {
         is PokemonDetailsViewModel.UiState.Error -> ErrorScreen()
         is PokemonDetailsViewModel.UiState.Loading -> LoadingScreen()
         is PokemonDetailsViewModel.UiState.Loaded -> PokemonDetailContent(
@@ -68,7 +74,7 @@ fun PokemonDetailContent(
     height: String,
     weight: String,
     isLegendary: Boolean,
-    types: List<String>,
+    types: List<PokemonDetailsViewModel.PokemonType>,
     gender: String,
     externalLink: String
 ) {
@@ -164,12 +170,16 @@ fun PokemonDetailContent(
             ) {
                 types.forEach { type ->
                     Text(
-                        text = type,
-                        fontSize = 14.sp,
+                        text = type.name,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colors.onPrimary,
                         modifier = Modifier
-                            .background(MaterialTheme.colors.primary, RoundedCornerShape(8.dp))
-                            .padding(horizontal = 8.dp, vertical = 4.dp)
+                            .background(
+                                Color(type.color),
+                                RoundedCornerShape(8.dp)
+                            )
+                            .padding(4.dp)
                     )
                 }
             }
