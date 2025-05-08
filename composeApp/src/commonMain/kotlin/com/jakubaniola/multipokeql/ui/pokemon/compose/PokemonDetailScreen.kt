@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
+import com.jakubaniola.multipokeql.designsystem.AppScaffold
 import com.jakubaniola.multipokeql.designsystem.AppTheme
 import com.jakubaniola.multipokeql.designsystem.ErrorScreen
 import com.jakubaniola.multipokeql.designsystem.LoadingScreen
@@ -47,30 +48,38 @@ fun PokemonDetailsScreen(
     LaunchedEffect(pokemonKey) {
         viewModel.initUiState(pokemonKey)
     }
-    BackHandler(onBack = {
+    val navigationBack = {
         viewModel.resetUiState()
         navigateBack()
-    })
-    when (val uiState = viewModel.uiState.collectAsStateWithLifecycle().value) {
-        is PokemonDetailsViewModel.UiState.Error -> ErrorScreen()
-        is PokemonDetailsViewModel.UiState.Loading -> LoadingScreen()
-        is PokemonDetailsViewModel.UiState.Loaded -> PokemonDetailContent(
-            pokemonName = uiState.pokemon.pokemonName,
-            pokedexNumber = uiState.pokemon.pokedexNumber,
-            imageUrl = uiState.pokemon.imageUrl,
-            height = uiState.pokemon.height,
-            weight = uiState.pokemon.weight,
-            isLegendary = uiState.pokemon.isLegendary,
-            types = uiState.pokemon.types,
-            gender = uiState.pokemon.gender,
-            externalLink = uiState.pokemon.externalLink,
-            browserNavigator = browserNavigator
-        )
+    }
+    BackHandler(onBack = navigationBack)
+    AppScaffold(
+        title = "Pokemon Details",
+        onBackClick = navigationBack,
+    ) { paddingValues ->
+        when (val uiState = viewModel.uiState.collectAsStateWithLifecycle().value) {
+            is PokemonDetailsViewModel.UiState.Error -> ErrorScreen()
+            is PokemonDetailsViewModel.UiState.Loading -> LoadingScreen()
+            is PokemonDetailsViewModel.UiState.Loaded -> PokemonDetailContent(
+                modifier = Modifier.padding(paddingValues),
+                pokemonName = uiState.pokemon.pokemonName,
+                pokedexNumber = uiState.pokemon.pokedexNumber,
+                imageUrl = uiState.pokemon.imageUrl,
+                height = uiState.pokemon.height,
+                weight = uiState.pokemon.weight,
+                isLegendary = uiState.pokemon.isLegendary,
+                types = uiState.pokemon.types,
+                gender = uiState.pokemon.gender,
+                externalLink = uiState.pokemon.externalLink,
+                browserNavigator = browserNavigator
+            )
+        }
     }
 }
 
 @Composable
 fun PokemonDetailContent(
+    modifier: Modifier,
     pokemonName: String,
     pokedexNumber: String,
     imageUrl: String,
@@ -84,7 +93,7 @@ fun PokemonDetailContent(
 ) {
     Card(
         shape = RoundedCornerShape(16.dp),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(16.dp),
         elevation = 8.dp
