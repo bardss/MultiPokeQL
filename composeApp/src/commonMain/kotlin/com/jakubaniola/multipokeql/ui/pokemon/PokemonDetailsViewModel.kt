@@ -38,7 +38,8 @@ class PokemonDetailsViewModel(
         weight = this.weight + " kg",
         isLegendary = this.isLegendary,
         types = this.types.map { PokemonType.fromString(it) },
-        gender = this.gender,
+        genderMale = this.gender.male,
+        genderFemale = this.gender.female,
         externalLink = this.externalLink
     )
 
@@ -56,7 +57,8 @@ class PokemonDetailsViewModel(
         val weight: String,
         val isLegendary: Boolean,
         val types: List<PokemonType>,
-        val gender: String,
+        val genderMale: String,
+        val genderFemale: String,
         val externalLink: String,
     )
 

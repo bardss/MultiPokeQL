@@ -4,6 +4,7 @@ import com.jakubaniola.multipokeql.core.mapSuccess
 import com.jakubaniola.multipokeql.data.PokemonRepository
 import com.jakubaniola.multipokeql.data.RemotePokemon
 import com.jakubaniola.multipokeql.data.RemotePokemonListItem
+import com.jakubaniola.multipokeql.data.RemoteGender
 
 class GetPokemonDetailsUseCase(
     private val pokemonRepository: PokemonRepository,
@@ -13,6 +14,11 @@ class GetPokemonDetailsUseCase(
         .mapSuccess { it.toPokemon() }
 }
 
+data class Gender(
+    val male: String,
+    val female: String
+)
+
 data class Pokemon(
     val pokemonName: String,
     val pokedexNumber: String,
@@ -21,7 +27,7 @@ data class Pokemon(
     val weight: String,
     val isLegendary: Boolean,
     val types: List<String>,
-    val gender: String,
+    val gender: Gender,
     val externalLink: String,
 )
 
@@ -33,6 +39,9 @@ fun RemotePokemon.toPokemon() = Pokemon(
     weight = this.weight,
     isLegendary = this.isLegendary,
     types = this.types,
-    gender = this.gender,
+    gender = Gender(
+        male = this.gender.male,
+        female = this.gender.female
+    ),
     externalLink = this.externalLink
 )

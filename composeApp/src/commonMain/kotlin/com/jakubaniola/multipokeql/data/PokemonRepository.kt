@@ -14,6 +14,11 @@ data class RemotePokemonListItem(
     val imageUrl: String,
 )
 
+data class RemoteGender(
+    val male: String,
+    val female: String
+)
+
 data class RemotePokemon(
     val pokemonName: String,
     val pokedexNumber: String,
@@ -22,6 +27,6 @@ data class RemotePokemon(
     val weight: String,
     val isLegendary: Boolean,
     val types: List<String>,
-    val gender: String,
+    val gender: RemoteGender,
     val externalLink: String,
 )

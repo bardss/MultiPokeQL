@@ -69,7 +69,8 @@ fun PokemonDetailsScreen(
                 weight = uiState.pokemon.weight,
                 isLegendary = uiState.pokemon.isLegendary,
                 types = uiState.pokemon.types,
-                gender = uiState.pokemon.gender,
+                genderMale = uiState.pokemon.genderMale,
+                genderFemale = uiState.pokemon.genderFemale,
                 externalLink = uiState.pokemon.externalLink,
                 browserNavigator = browserNavigator
             )
@@ -87,7 +88,8 @@ fun PokemonDetailContent(
     weight: String,
     isLegendary: Boolean,
     types: List<PokemonDetailsViewModel.PokemonType>,
-    gender: String,
+    genderMale: String,
+    genderFemale: String,
     externalLink: String,
     browserNavigator: BrowserNavigator,
 ) {
@@ -202,7 +204,17 @@ fun PokemonDetailContent(
             // Gender with Emoji
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "🚻 Gender: $gender",
+                    text = "Gender:",
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colors.onSurface
+                )
+                Text(
+                    text = "♂️ $genderMale%",
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colors.onSurface
+                )
+                Text(
+                    text = "♀️ $genderFemale%",
                     fontSize = 16.sp,
                     color = MaterialTheme.colors.onSurface
                 )
