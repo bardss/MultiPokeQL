@@ -120,7 +120,7 @@ fun PokemonDetailContent(
                 text = pokemonName,
                 fontSize = 28.sp,
                 fontWeight = FontWeight.ExtraBold,
-                color = MaterialTheme.colors.primary
+                color = Color(types[0].color),
             )
             Text(
                 text = "PokeDex #$pokedexNumber",
