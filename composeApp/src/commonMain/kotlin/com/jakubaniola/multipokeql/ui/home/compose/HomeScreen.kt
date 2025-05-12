@@ -3,6 +3,7 @@ package com.jakubaniola.multipokeql.ui.home.compose
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -14,18 +15,24 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun HomeScreen(
+    listState: LazyListState,
     viewModel: HomeViewModel = koinViewModel<HomeViewModel>(),
     navigateToDetails: (String) -> Unit,
 ) {
     AppTheme {
         val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
-        HomeContent(uiState, navigateToDetails)
+        HomeContent(
+            uiState = uiState,
+            listState = listState,
+            navigateToDetails = navigateToDetails
+        )
     }
 }
 
 @Composable
 fun HomeContent(
     uiState: HomeViewModel.UiState,
+    listState: LazyListState,
     navigateToDetails: (String) -> Unit,
 ) {
     AppScaffold(
@@ -35,8 +42,10 @@ fun HomeContent(
             is HomeViewModel.UiState.Loaded -> HomeList(
                 modifier = Modifier.padding(paddingValues),
                 uiState = uiState,
-                navigateToDetails = navigateToDetails
+                listState = listState,
+                navigateToDetails = navigateToDetails,
             )
+
             is HomeViewModel.UiState.Loading -> LoadingScreen()
         }
     }
@@ -46,10 +55,12 @@ fun HomeContent(
 fun HomeList(
     modifier: Modifier,
     uiState: HomeViewModel.UiState.Loaded,
+    listState: LazyListState,
     navigateToDetails: (String) -> Unit,
 ) {
     LazyColumn(
-        modifier = modifier
+        modifier = modifier,
+        state = listState,
     ) {
         items(uiState.items.size) { index ->
             val item = uiState.items[index]
