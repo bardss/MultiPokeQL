@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import coil3.compose.AsyncImage
 import multipokeql.composeapp.generated.resources.Res
-import multipokeql.composeapp.generated.resources.pokemon_placeholder
+import multipokeql.composeapp.generated.resources.multipokeql
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
@@ -17,8 +17,8 @@ fun ImageByUrl(
         model = imageUrl,
         contentDescription = null,
         contentScale = ContentScale.FillHeight,
-        placeholder = painterResource(Res.drawable.pokemon_placeholder),
-        error = painterResource(Res.drawable.pokemon_placeholder),
+        placeholder = painterResource(Res.drawable.multipokeql),
+        error = painterResource(Res.drawable.multipokeql),
         modifier = modifier
     )
 }
