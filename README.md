@@ -1,5 +1,7 @@
 # MultiPokeQL
 
+<img src="readmeRes/multipokeql.png" width="200px">
+
 ### Open source Pokédex app.
 
 #### Compose Kotlin Multiplatform project with GraphQL, MVVM, Compose, Flow, Coroutines, Koin.
