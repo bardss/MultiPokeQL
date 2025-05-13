@@ -30,7 +30,6 @@ kotlin {
     }
     
     sourceSets {
-        
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
@@ -48,6 +47,7 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.coil.compose)
+            implementation(libs.coil.compose.gif)
             implementation(libs.coil.network.ktor)
             implementation(libs.apollo.runtime)
             implementation(libs.bankhandler)

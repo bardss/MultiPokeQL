@@ -31,6 +31,7 @@ import coil3.compose.AsyncImage
 import com.jakubaniola.multipokeql.designsystem.AppScaffold
 import com.jakubaniola.multipokeql.designsystem.AppTheme
 import com.jakubaniola.multipokeql.designsystem.ErrorScreen
+import com.jakubaniola.multipokeql.designsystem.ImageByUrl
 import com.jakubaniola.multipokeql.designsystem.LoadingScreen
 import com.jakubaniola.multipokeql.ui.pokemon.PokemonDetailsViewModel
 import org.koin.compose.viewmodel.koinViewModel
@@ -105,10 +106,8 @@ fun PokemonDetailContent(
                 .background(MaterialTheme.colors.surface)
                 .padding(16.dp)
         ) {
-            // Image
-            AsyncImage(
-                model = imageUrl,
-                contentDescription = "$pokemonName image",
+            ImageByUrl(
+                imageUrl = imageUrl,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)

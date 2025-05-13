@@ -14,6 +14,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.jakubaniola.multipokeql.designsystem.ImageByUrl
+import multipokeql.composeapp.generated.resources.Res
+import multipokeql.composeapp.generated.resources.compose_multiplatform
+import multipokeql.composeapp.generated.resources.pokemon_placeholder
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun PokemonListEntry(
@@ -33,10 +38,8 @@ fun PokemonListEntry(
                 .background(MaterialTheme.colors.surface)
                 .padding(16.dp)
         ) {
-            AsyncImage(
-                model = imageUrl,
-                contentDescription = "$pokemonName icon",
-                contentScale = ContentScale.FillHeight,
+            ImageByUrl(
+                imageUrl = imageUrl,
                 modifier = Modifier
                     .size(height = 64.dp, width = 120.dp)
                     .padding(end = 16.dp)
