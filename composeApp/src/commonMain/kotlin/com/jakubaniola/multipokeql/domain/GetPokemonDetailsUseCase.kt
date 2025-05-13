@@ -1,10 +1,6 @@
 package com.jakubaniola.multipokeql.domain
 
 import com.jakubaniola.multipokeql.core.mapSuccess
-import com.jakubaniola.multipokeql.data.PokemonRepository
-import com.jakubaniola.multipokeql.data.RemotePokemon
-import com.jakubaniola.multipokeql.data.RemotePokemonListItem
-import com.jakubaniola.multipokeql.data.RemoteGender
 
 class GetPokemonDetailsUseCase(
     private val pokemonRepository: PokemonRepository,

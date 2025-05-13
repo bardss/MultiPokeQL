@@ -4,6 +4,9 @@ import com.apollographql.apollo.ApolloClient
 import com.jakubaniola.multipokeql.GetPokemonDetailsQuery
 import com.jakubaniola.multipokeql.GetPokemonListQuery
 import com.jakubaniola.multipokeql.core.ServiceResponse
+import com.jakubaniola.multipokeql.domain.RemoteGender
+import com.jakubaniola.multipokeql.domain.RemotePokemon
+import com.jakubaniola.multipokeql.domain.RemotePokemonListItem
 import com.jakubaniola.multipokeql.type.PokemonEnum
 
 class PokemonRemoteServiceImpl : PokemonRemoteService {
@@ -11,9 +14,9 @@ class PokemonRemoteServiceImpl : PokemonRemoteService {
         .serverUrl(POKEMON_GRAPHQL_URL)
         .build()
 
-    override suspend fun getPokemons() = ServiceResponse.Success(
+    override suspend fun getPokemons(offset: Int, pageSize: Int) = ServiceResponse.Success(
         apolloClient
-            .query(GetPokemonListQuery(OFFSET_TO_START_FROM_POKEDEX_1, 200))
+            .query(GetPokemonListQuery(offset, pageSize))
             .execute()
             .data
             ?.getAllPokemon
@@ -36,7 +39,6 @@ class PokemonRemoteServiceImpl : PokemonRemoteService {
 
     companion object {
         private const val POKEMON_GRAPHQL_URL = "https://graphqlpokemon.favware.tech/v8"
-        private const val OFFSET_TO_START_FROM_POKEDEX_1 = 93
     }
 }
 

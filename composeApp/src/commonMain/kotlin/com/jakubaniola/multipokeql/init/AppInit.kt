@@ -2,7 +2,7 @@ package com.jakubaniola.multipokeql.init
 
 import com.jakubaniola.multipokeql.data.PokemonRemoteService
 import com.jakubaniola.multipokeql.data.PokemonRemoteServiceImpl
-import com.jakubaniola.multipokeql.data.PokemonRepository
+import com.jakubaniola.multipokeql.domain.PokemonRepository
 import com.jakubaniola.multipokeql.data.PokemonRepositoryImpl
 import com.jakubaniola.multipokeql.domain.GetPokemonDetailsUseCase
 import com.jakubaniola.multipokeql.domain.GetPokemonsUseCase

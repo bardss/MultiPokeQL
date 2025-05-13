@@ -1,9 +1,9 @@
-package com.jakubaniola.multipokeql.data
+package com.jakubaniola.multipokeql.domain
 
 import com.jakubaniola.multipokeql.core.DataResult
 
 interface PokemonRepository {
-    suspend fun getPokemons(): DataResult.Success<List<RemotePokemonListItem>>
+    suspend fun getPokemons(offset: Int, pageSize: Int): DataResult.Success<List<RemotePokemonListItem>>
     suspend fun getPokemon(pokemonKey: String): DataResult<RemotePokemon>
 }
 

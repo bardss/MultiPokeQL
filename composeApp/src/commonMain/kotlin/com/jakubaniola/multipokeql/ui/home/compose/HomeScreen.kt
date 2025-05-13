@@ -5,6 +5,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jakubaniola.multipokeql.designsystem.AppScaffold
@@ -24,7 +28,8 @@ fun HomeScreen(
         HomeContent(
             uiState = uiState,
             listState = listState,
-            navigateToDetails = navigateToDetails
+            navigateToDetails = navigateToDetails,
+            loadNextPage = viewModel::loadNextPage
         )
     }
 }
@@ -34,6 +39,7 @@ fun HomeContent(
     uiState: HomeViewModel.UiState,
     listState: LazyListState,
     navigateToDetails: (String) -> Unit,
+    loadNextPage: () -> Unit,
 ) {
     AppScaffold(
         title = "Pokédex",
@@ -44,6 +50,7 @@ fun HomeContent(
                 uiState = uiState,
                 listState = listState,
                 navigateToDetails = navigateToDetails,
+                loadNextPage = loadNextPage,
             )
 
             is HomeViewModel.UiState.Loading -> LoadingScreen()
@@ -57,7 +64,14 @@ fun HomeList(
     uiState: HomeViewModel.UiState.Loaded,
     listState: LazyListState,
     navigateToDetails: (String) -> Unit,
+    loadNextPage: () -> Unit,
 ) {
+    val shouldLoadNextPage by remember {
+        derivedStateOf { shouldLoadNextPage(listState) }
+    }
+    if (shouldLoadNextPage) {
+        LaunchedEffect(listState) { loadNextPage() }
+    }
     LazyColumn(
         modifier = modifier,
         state = listState,

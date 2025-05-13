@@ -1,13 +1,10 @@
 package com.jakubaniola.multipokeql.domain
 
-import com.jakubaniola.multipokeql.data.PokemonRepository
-import com.jakubaniola.multipokeql.data.RemotePokemonListItem
-
 class GetPokemonsUseCase(
     private val pokemonRepository: PokemonRepository,
 ) {
-    suspend operator fun invoke() = pokemonRepository
-        .getPokemons()
+    suspend operator fun invoke(offset: Int, pageSize: Int) = pokemonRepository
+        .getPokemons(offset, pageSize)
         .data
         .toPokemonListItem()
 }

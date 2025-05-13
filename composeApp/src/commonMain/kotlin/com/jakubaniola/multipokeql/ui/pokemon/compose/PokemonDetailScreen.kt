@@ -209,12 +209,12 @@ fun PokemonDetailContent(
                     color = MaterialTheme.colors.onSurface
                 )
                 Text(
-                    text = "♂️ $genderMale%",
+                    text = "♂️ $genderMale",
                     fontSize = 16.sp,
                     color = MaterialTheme.colors.onSurface
                 )
                 Text(
-                    text = "♀️ $genderFemale%",
+                    text = "♀️ $genderFemale",
                     fontSize = 16.sp,
                     color = MaterialTheme.colors.onSurface
                 )
